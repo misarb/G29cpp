@@ -1,10 +1,6 @@
 /*
  * Copyright (c) 2024 . All rights reserved.
  *
- * This software is the confidential and proprietary information of
- * ("Confidential Information"). You shall not
- * disclose such Confidential Information and shall use it only in
- * accordance with the terms of the license agreement you entered into
  *
  * BOULBALAH LAHCEN MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE
  * SUITABILITY OF THE SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING
@@ -13,7 +9,6 @@
  * SHALL NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE AS A RESULT
  * OF USING, MODIFYING OR DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES.
  * Devlopper : BOULBALAH Lahcen
- * Email : lahcen.boulbalah@alten.com
  * Email : lahcen.boulbalah@gmail.com
  */
 
