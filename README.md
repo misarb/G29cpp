@@ -58,8 +58,10 @@ int main() {
 ![Rust::G29rs](https://github.com/misarb/g29rs)
 
 # Contact
+Buy me a Coffee : [paypal](paypal.me/LBoulbalah)
 
 For any inquiries, please contact:
 
   - Developer: BOULBALAH Lahcen
   - Email: lahcen.boulbalah@gmail.com
+    
