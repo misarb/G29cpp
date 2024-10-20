@@ -6,7 +6,7 @@ on:
       - unit_test  
   pull_request:
     branches:
-      - unit_test  
+      - main  
 
 jobs:
   build:
