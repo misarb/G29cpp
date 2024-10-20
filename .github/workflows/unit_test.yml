@@ -1,0 +1,38 @@
+name: Unit Tests
+
+on:
+  push:
+    branches:
+      - unit_test  
+  pull_request:
+    branches:
+      - main  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake g++  # Install build tools
+          sudo apt-get install -y libgtest-dev  # Install Google Test
+          sudo apt-get install -y libhidapi-dev
+          cd /usr/src/gtest && sudo cmake . && sudo make   # Build Google Test library
+
+      - name: Build Project
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build .
+
+      - name: Run Tests
+        run: |
+          cd build
+          ctest  
+
