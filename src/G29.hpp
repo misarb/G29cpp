@@ -114,6 +114,16 @@ public:
      */
     std::string getPressedButton();
 
+    /**
+     * @brief Updates the state of all buttons based on raw input data.
+     * 
+     * @param byteArray The raw input data from the device.
+     * @return The name of the first pressed button found, or an empty string if no button is pressed.
+     */
+    std::string updateButtonState(const std::vector<uint8_t>& byteArray);
+
+
+
 private:
     hid_device* device;  ///< Pointer to the HID device.
     std::vector<uint8_t> cache;  ///< Buffer for storing raw input data.
@@ -136,11 +146,5 @@ private:
      */
     uint8_t calculateSteering(uint8_t start, uint8_t end) const;
 
-    /**
-     * @brief Updates the state of all buttons based on raw input data.
-     * 
-     * @param byteArray The raw input data from the device.
-     * @return The name of the first pressed button found, or an empty string if no button is pressed.
-     */
-    std::string updateButtonState(const std::vector<uint8_t>& byteArray);
+    
 };

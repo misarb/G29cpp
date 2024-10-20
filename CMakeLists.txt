@@ -37,6 +37,38 @@ target_link_libraries(g29_text_example
         ${HIDAPI_LIBRARIES}
 )
 
+
+# Google Test
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+# Enable testing
+enable_testing()
+
+# Add the test executable
+add_executable(G29Test
+  test/G29Test.cpp
+)
+
+target_link_libraries(G29Test
+  PRIVATE
+    G29
+    ${HIDAPI_LIBRARIES}
+    gtest_main
+    gmock_main
+)
+
+# Include the Google Test module
+include(GoogleTest)
+
+# Discover tests
+gtest_discover_tests(G29Test)
 # Install rules
 # install(TARGETS G29 g29_example
 #     RUNTIME DESTINATION bin

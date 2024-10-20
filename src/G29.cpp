@@ -1,5 +1,6 @@
 #include "G29.hpp"
 #include <iostream>
+#include <algorithm>  
 
 G29::G29() {
     if (hid_init() != 0) {
@@ -132,35 +133,36 @@ uint8_t G29::calculateSteering(uint8_t start, uint8_t end) const {
 
 std::string G29::updateButtonState(const std::vector<uint8_t>& byteArray) {
     if (byteArray.size() < 16) return "";
+    //buttonState.clear();
 
-    buttonState["X"] = (byteArray[0] == 0x18);
-    buttonState["Square"] = (byteArray[0] == 0x28);
-    buttonState["Triangle"] = (byteArray[0] == 0x88);
-    buttonState["Circle"] = (byteArray[0] == 0x48);
+     // Correct the conditions and ensure they are distinct
+    buttonState["X"] = (byteArray[0] & 0x18) == 0x18;
+    buttonState["Square"] = (byteArray[0] & 0x28) == 0x28;
+    buttonState["Triangle"] = (byteArray[0] & 0x88) == 0x88;
+    buttonState["Circle"] = (byteArray[0] & 0x48) == 0x48;
 
-    buttonState["L2"] = (byteArray[1] == 0x08);
-    buttonState["R2"] = (byteArray[1] == 0x04);
-    buttonState["L3"] = (byteArray[1] == 0x80);
-    buttonState["R3"] = (byteArray[1] == 0x40);
+    buttonState["L2"] = (byteArray[1] & 0x08) == 0x08;
+    buttonState["R2"] = (byteArray[1] & 0x04) == 0x04;
+    buttonState["L3"] = (byteArray[1] & 0x80) == 0x80;
+    buttonState["R3"] = (byteArray[1] & 0x40) == 0x40;
 
-    buttonState["DPadUp"] = (byteArray[0] == 0x00);
-    buttonState["DPadDown"] = (byteArray[0] == 0x04);
-    buttonState["DPadLeft"] = (byteArray[0] == 0x06);
-    buttonState["DPadRight"] = (byteArray[0] == 0x02);
+    buttonState["DPadUp"] = (byteArray[0] & 0x0F) == 0x00;  // Mask with 0x0F for directional checks
+    buttonState["DPadDown"] = (byteArray[0] & 0x0F) == 0x04;
+    buttonState["DPadLeft"] = (byteArray[0] & 0x0F) == 0x06;
+    buttonState["DPadRight"] = (byteArray[0] & 0x0F) == 0x02;
 
-    buttonState["RotaryDialPress"] = (byteArray[3] == 0x08);
+    buttonState["RotaryDialPress"] = (byteArray[3] & 0x08) == 0x08;
 
-    buttonState["PlusButton"] = (byteArray[2] == 0x80);
-    buttonState["MinusButton"] = (byteArray[3] == 0x01);
+    buttonState["PlusButton"] = (byteArray[2] & 0x80) == 0x80;
+    buttonState["MinusButton"] = (byteArray[3] & 0x01) == 0x01;
 
-    buttonState["LeftPaddle"] = (byteArray[1] == 0x02);
-    buttonState["RightPaddle"] = (byteArray[1] == 0x01);
+    buttonState["LeftPaddle"] = (byteArray[1] & 0x02) == 0x02;
+    buttonState["RightPaddle"] = (byteArray[1] & 0x01) == 0x01;
 
-    buttonState["Share"] = (byteArray[1] == 0x10);
-    buttonState["Options"] = (byteArray[1] == 0x20);
-    buttonState["PS"] = (byteArray[3] == 0x10);
-
-     
+    buttonState["Share"] = (byteArray[1] & 0x10) == 0x10;
+    buttonState["Options"] = (byteArray[1] & 0x20) == 0x20;
+    buttonState["PS"] = (byteArray[3] & 0x10) == 0x10;
+    // std::cout << "Button pressed: " << getPressedButton() << std::endl;
 
     if (byteArray[0] == 0x18) return "X";
     if (byteArray[0] == 0x28) return "Square";
@@ -191,6 +193,9 @@ std::string G29::updateButtonState(const std::vector<uint8_t>& byteArray) {
 
     return "";
 }
+
+
+
 
 bool G29::isButtonPressed(const std::string& button) const {
     auto it = buttonState.find(button);
