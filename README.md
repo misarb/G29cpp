@@ -63,5 +63,5 @@ Buy me a Coffee : [paypal](paypal.me/LBoulbalah)
 For any inquiries, please contact:
 
   - Developer: BOULBALAH Lahcen
-  - Email: lahcen.boulbalah@gmail.com
+  - Email: boulbalah.lahcen@gmail.com
     
